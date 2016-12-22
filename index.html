@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Titre de la page</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="js/paper-full.min.js"></script>
+</head>
+<body>
+    <div id="background">
+        <div id="downgif">
+            <img src="img/1.gif" id="gueef"/>
+        </div>
+        <img src="img/splash.gif" id="gifland"/>
+        <canvas id="mykeul"></canvas>
+    </div>
+    <script src="js/script.js"></script>
+    <script scr="js/paperscript.js" type="text/paperscript" canvas="mykeul">
+        
+        var star, starFX=false, forward=true, lightspeed=false, lightspeedY=false;
+        var lights= new Array();
+        var lightsY= new Array();
+
+        function initStar(){
+            star = new Path.Star({
+                center: view.center,
+                points: 20,
+                radius1: 15,
+                radius2: 25,
+                fillColor: getRandomColor()
+            });
+            star.visible=false;
+        }
+
+        function initLightSpeed(){
+            var fromX=0;
+            lights= new Array();
+            for(var i=0;i<50; i++){
+                var from = new Point(fromX,0);
+                var to = new Point(fromX-100, view.bounds.height);
+                var rect = Path.Rectangle(from, to);
+                rect.fillColor = getRandomColor();
+                lights.push(rect);
+                fromX -= 150;
+            }
+        }
+
+        function initLightSpeedY(){
+            var fromY=0;
+            lightsY = new Array();
+            for(var i=0; i<50; i++){
+                var from = new Point(0, fromY);
+                var to = new Point(view.bounds.width, fromY-100);
+                var rect = Path.Rectangle(from, to);
+                rect.fillColor = getRandomColor();
+                lightsY.push(rect);
+                fromY -=150;
+            }
+        }
+
+        initStar();
+        initLightSpeed();
+        initLightSpeedY();
+
+        function frameStar(){
+            star.visible=true;
+            star.fillColor = getRandomColor();
+            if(forward){
+                star.rotate(2);
+                star.scale(1.1);
+                if(star.bounds.height>view.bounds.height*4){
+                    forward=false;
+                }
+            }
+            else{
+                star.rotate(-2);
+                star.scale(0.9);
+                if(star.bounds.height<view.bounds.height/100){
+                    star.visible=false;
+                    forward=true;
+                    starFX=false;
+                    initStar();
+                }
+            }
+        }
+
+        function frameLightSpeed(){
+            for(var i=0; i<lights.length; i++){
+                lights[i].position.x +=100;
+            }
+
+            if(lights[49].position.x>view.bounds.width){
+                lightspeed=false;
+                initLightSpeed();
+            }
+        }
+
+        function frameLightSpeedY(){
+            for(var i=0; i<lightsY.length; i++){
+                lightsY[i].position.y +=100;
+            }
+
+            if(lightsY[49].position.y>view.bounds.height){
+                lightspeedY=false;
+                initLightSpeedY();
+            }
+        }
+
+        function onFrame(event){
+            if(starFX)
+                frameStar();
+            if(lightspeed)
+                frameLightSpeed();
+            if(lightspeedY)
+                frameLightSpeedY();
+        }
+
+
+
+        function onKeyDown(event){
+            switch(event.key){
+                case '&': changeBackground('white'); break;
+                case 'é': changeBackground('black'); break;
+                case '"': changeBackground('burlywood'); break;
+                case '\'' : changeBackground('darkcyan'); break;
+                case '(' : changeBackground('darkorchid'); break;
+                case '§' : changeBackground('darkslategrey'); break;
+                case 'è' : changeBackground('greenyellow'); break;
+                case '!' : changeBackground('hotpink'); break;
+                case 'ç' : changeBackground('indigo'); break;
+                case 'à' : changeBackground('aquamarine'); break;
+                //todo random color
+                case 'a': changeGif('img/1.gif'); break;
+                case 'z': changeGif('img/2.gif'); break;
+                case 'e': changeGif('img/3.gif'); break;
+                case 'r': changeGif('img/4.gif'); break;
+                case 't': changeGif('img/5.gif'); break;
+                case 'y': changeGif('img/6.gif'); break;
+                case 'u': changeGif('img/7.gif'); break;
+                case 'i': changeGif('img/8.gif'); break;
+                case 'o': changeGif('img/9.gif'); break;
+                case 'p': changeGif('img/10.gif'); break;
+                case 'q': changeGif('img/11.gif'); break;
+                case 's': changeGif('img/12.gif'); break;
+                case 'd': changeGif('img/13.gif'); break;
+                case 'f': changeGif('img/14.gif'); break;
+                case 'g': changeGif('img/15.gif'); break;
+                case 'h': changeGif('img/16.gif'); break;
+                case 'j': changeGif('img/17.gif'); break;
+                case 'k': changeGif('img/18.gif'); break;
+                case 'l': changeGif('img/19.gif'); break;
+                case 'm': changeGif('img/20.gif'); break;
+                case '=': changeGif(''); break;
+                //todo mosaique
+                //todo FX
+                case 'w': starFX=true; break;
+                case 'x': lightspeed=true; break;
+                case 'c': lightspeedY=true; break;
+                case 'space' : doSplash(); break;
+            }
+
+        }
+    </script>
+</body>
+</html>

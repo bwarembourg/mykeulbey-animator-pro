@@ -1,0 +1,40 @@
+body{
+    background-color: black;
+    overflow:hidden;
+}
+
+#background{
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0; 
+    background-color: tomato;
+    z-index: 100;
+}
+
+#downgif{
+    position:absolute;
+    left:50%;
+    top:0%;
+    height: 100%;
+}
+
+#gueef{
+    position:relative;
+    left:-50%;
+    top:0%;
+    height:100%;
+    z-index: -100;
+}
+
+#gifland{
+    position:absolute;
+    left:0%;
+    top:25%;
+    width:100%;
+}
+
+#mykeul{
+    z-index:100;
+}
